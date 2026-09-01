@@ -33,6 +33,8 @@ export interface CreateApplicationRequest {
   jobOfferUrl?: string;
   applicationDate: string;
   initialStatus?: ApplicationStatus;
+  /** Antidate la 1ère ligne d'historique — utile en saisissant une candidature déjà en cours. */
+  initialStatusChangedAt?: string;
   estimatedSalary?: number;
   notes?: string;
 }

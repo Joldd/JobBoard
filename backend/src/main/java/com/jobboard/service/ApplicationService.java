@@ -58,10 +58,13 @@ public class ApplicationService {
                 .build();
         applicationRepository.save(application);
 
+        LocalDateTime initialChangedAt =
+                request.initialStatusChangedAt() != null ? request.initialStatusChangedAt() : LocalDateTime.now();
+
         statusHistoryRepository.save(StatusHistory.builder()
                 .application(application)
                 .status(initialStatus)
-                .changedAt(LocalDateTime.now())
+                .changedAt(initialChangedAt)
                 .comment("Création de la candidature")
                 .build());
 
