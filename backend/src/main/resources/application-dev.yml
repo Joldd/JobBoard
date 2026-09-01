@@ -1,0 +1,14 @@
+# Profil utilisé en développement local : le backend tourne sur la machine hôte
+# (via mvnw/IDE) et se connecte à PostgreSQL démarré par docker-compose sur localhost.
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:${DB_PORT:5432}/${DB_NAME:jobboard}
+    username: ${DB_USERNAME:jobboard}
+    password: ${DB_PASSWORD:jobboard}
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    com.jobboard: debug

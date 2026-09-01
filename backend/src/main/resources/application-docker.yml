@@ -1,0 +1,8 @@
+# Profil utilisé quand le backend tourne lui-même dans docker-compose :
+# "postgres" est le nom du service PostgreSQL sur le réseau docker-compose,
+# résolu par le DNS interne de Docker (pas "localhost").
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${DB_NAME:jobboard}
+    username: ${DB_USERNAME:jobboard}
+    password: ${DB_PASSWORD:jobboard}
