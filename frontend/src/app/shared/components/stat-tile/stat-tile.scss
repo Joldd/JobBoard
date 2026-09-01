@@ -1,20 +1,21 @@
 .stat-tile {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  padding: 1.25rem 1.5rem;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  gap: 0.3rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 
   &__value {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #0b0b0b;
+    font-family: var(--font-heading);
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
   }
 
   &__label {
     font-size: 0.85rem;
-    color: #52514e;
+    color: var(--color-text-secondary);
   }
 }

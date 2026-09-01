@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  // Palette "chaleureuse et accueillante" : crème + terracotta, plutôt que le
+  // gris/bleu froid par défaut. Les couleurs des graphiques (dashboard) restent
+  // à part — elles sont validées pour l'accessibilité (voir shared/constants/
+  // chart-palette.ts) et ne doivent pas être re-teintées au hasard.
+  --color-bg: #fbf3ea;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fff8f0;
+  --color-border: #ecdfd1;
+
+  --color-text-primary: #3a2a20;
+  --color-text-secondary: #8a7566;
+  --color-text-muted: #b4a697;
+
+  --color-primary: #d9713f;
+  --color-primary-hover: #c05f30;
+  --color-primary-soft: #fbe4d6;
+
+  --color-secondary: #e8a33d;
+
+  --color-danger: #b33f3f;
+  --color-danger-soft: #f8e1db;
+
+  --color-success: #6b8f58;
+
+  --color-navbar-bg: #3a2a20;
+  --color-navbar-text: #f3e8dd;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 2px 8px rgba(58, 42, 32, 0.08);
+  --shadow-card-hover: 0 6px 20px rgba(58, 42, 32, 0.12);
+
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+button {
+  font-family: inherit;
+}

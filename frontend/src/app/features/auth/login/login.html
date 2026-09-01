@@ -1,6 +1,8 @@
 <div class="auth-page">
+  <div class="auth-brand">JobBoard</div>
+
   <form class="auth-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-    <h1>Connexion</h1>
+    <h1>Content de te revoir</h1>
 
     @if (errorMessage()) {
       <p class="auth-card__error">{{ errorMessage() }}</p>
