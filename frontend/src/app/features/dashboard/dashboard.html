@@ -1,4 +1,98 @@
-<section class="dashboard">
-  <h1>Tableau de bord</h1>
-  <p>Les statistiques de candidatures arriveront ici.</p>
-</section>
+@if (loading()) {
+  <p class="dashboard-status">Chargement des statistiques…</p>
+} @else if (errorMessage()) {
+  <p class="dashboard-status dashboard-status--error">{{ errorMessage() }}</p>
+} @else if (stats(); as data) {
+  <section class="dashboard">
+    <h1>Tableau de bord</h1>
+
+    <div class="kpi-row">
+      <app-stat-tile label="Candidatures au total" [value]="totalApplications().toString()" />
+      <app-stat-tile label="Délai moyen de réponse" [value]="averageResponseLabel()" />
+      <app-stat-tile label="Conversion globale (postulé → offre)" [value]="globalConversionLabel()" />
+    </div>
+
+    <div class="charts-grid">
+      <section class="chart-card">
+        <h2>Répartition par statut</h2>
+        @if (statusChartConfig(); as config) {
+          <app-chart [config]="config" />
+        }
+        <ul class="legend-list">
+          @for (item of statusLegend(); track item.label) {
+            <li>
+              <span class="legend-list__swatch" [style.background]="item.color"></span>
+              {{ item.label }} — {{ item.count }}
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="chart-card">
+        <h2>Répartition par type de poste</h2>
+        @if (jobTypeChartConfig(); as config) {
+          <app-chart [config]="config" />
+        }
+        <ul class="legend-list">
+          @for (item of jobTypeLegend(); track item.label) {
+            <li>
+              <span class="legend-list__swatch" [style.background]="item.color"></span>
+              {{ item.label }} — {{ item.count }}
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="chart-card">
+        <h2>Top entreprises</h2>
+        @if (topCompaniesChartConfig(); as config) {
+          @if (data.topCompanies.length > 0) {
+            <app-chart [config]="config" />
+          } @else {
+            <p class="empty">Pas encore assez de données.</p>
+          }
+        }
+      </section>
+
+      <section class="chart-card">
+        <h2>Évolution des candidatures</h2>
+        @if (trendChartConfig(); as config) {
+          @if (data.applicationsOverTime.length > 0) {
+            <app-chart [config]="config" />
+          } @else {
+            <p class="empty">Pas encore assez de données.</p>
+          }
+        }
+      </section>
+
+      <section class="chart-card chart-card--wide">
+        <h2>Funnel de conversion</h2>
+        @if (funnelChartConfig(); as config) {
+          @if (data.conversionFunnel.length > 0) {
+            <app-chart [config]="config" />
+            <table class="funnel-table">
+              <thead>
+                <tr>
+                  <th>De</th>
+                  <th>Vers</th>
+                  <th>Taux de conversion</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (step of data.conversionFunnel; track step.fromStage) {
+                  <tr>
+                    <td>{{ step.fromStage | statusLabel }} ({{ step.fromCount }})</td>
+                    <td>{{ step.toStage | statusLabel }} ({{ step.toCount }})</td>
+                    <td>{{ (step.conversionRate * 100).toFixed(0) }} %</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          } @else {
+            <p class="empty">Pas encore assez de données.</p>
+          }
+        }
+      </section>
+    </div>
+  </section>
+}
