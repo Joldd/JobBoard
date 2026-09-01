@@ -1,0 +1,39 @@
+<div class="auth-page">
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h1>Créer un compte</h1>
+
+    @if (errorMessage()) {
+      <p class="auth-card__error">{{ errorMessage() }}</p>
+    }
+
+    <label for="name">Nom</label>
+    <input id="name" type="text" formControlName="name" autocomplete="name" />
+    @if (form.controls.name.invalid && form.controls.name.touched) {
+      <p class="field-error">Nom requis.</p>
+    }
+
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email" autocomplete="email" />
+    @if (form.controls.email.invalid && form.controls.email.touched) {
+      <p class="field-error">Email invalide.</p>
+    }
+
+    <label for="password">Mot de passe</label>
+    <input id="password" type="password" formControlName="password" autocomplete="new-password" />
+    @if (form.controls.password.invalid && form.controls.password.touched) {
+      <p class="field-error">8 caractères minimum.</p>
+    }
+
+    <label for="confirmPassword">Confirmation</label>
+    <input id="confirmPassword" type="password" formControlName="confirmPassword" autocomplete="new-password" />
+    @if (form.errors?.['passwordMismatch'] && form.controls.confirmPassword.touched) {
+      <p class="field-error">Les mots de passe ne correspondent pas.</p>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Création…' : "S'inscrire" }}
+    </button>
+
+    <p class="auth-card__switch">Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+  </form>
+</div>

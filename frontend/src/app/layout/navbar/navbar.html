@@ -1,4 +1,10 @@
 <nav class="navbar">
   <span class="navbar__brand">JobBoard</span>
-  <!-- Liens de navigation et action de déconnexion ajoutés à l'étape auth -->
+
+  @if (authService.currentUser(); as user) {
+    <div class="navbar__user">
+      <span>{{ user.name }}</span>
+      <button type="button" (click)="logout()">Déconnexion</button>
+    </div>
+  }
 </nav>
