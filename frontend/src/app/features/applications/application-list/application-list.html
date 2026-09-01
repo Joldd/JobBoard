@@ -1,0 +1,74 @@
+<section class="applications">
+  <header class="applications__header">
+    <h1>Candidatures</h1>
+    <a routerLink="/applications/new" class="btn btn--primary">+ Nouvelle candidature</a>
+  </header>
+
+  <form class="filters" [formGroup]="filterForm">
+    <input type="text" formControlName="company" placeholder="Entreprise…" />
+
+    <select formControlName="status">
+      <option value="">Tous les statuts</option>
+      @for (option of statusOptions; track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+
+    <select formControlName="jobType">
+      <option value="">Tous les types de poste</option>
+      @for (option of jobTypeOptions; track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+
+    <label class="filters__date">
+      Du
+      <input type="date" formControlName="dateFrom" />
+    </label>
+    <label class="filters__date">
+      Au
+      <input type="date" formControlName="dateTo" />
+    </label>
+  </form>
+
+  @if (loading()) {
+    <p>Chargement…</p>
+  } @else if (applications().length === 0) {
+    <p class="empty">Aucune candidature ne correspond à ces filtres.</p>
+  } @else {
+    <table class="applications__table">
+      <thead>
+        <tr>
+          <th>Entreprise</th>
+          <th>Poste</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Statut</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (application of applications(); track application.id) {
+          <tr>
+            <td>{{ application.company }}</td>
+            <td>{{ application.position }}</td>
+            <td>{{ application.jobType | jobTypeLabel }}</td>
+            <td>{{ application.applicationDate }}</td>
+            <td><app-status-badge [status]="application.currentStatus" /></td>
+            <td class="actions">
+              <a [routerLink]="['/applications', application.id]">Voir</a>
+              <a [routerLink]="['/applications', application.id, 'edit']">Modifier</a>
+              <button type="button" (click)="delete(application)">Supprimer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <nav class="pagination">
+      <button type="button" [disabled]="page() === 0" (click)="goToPage(page() - 1)">←</button>
+      <span>Page {{ page() + 1 }} / {{ totalPages }}</span>
+      <button type="button" [disabled]="page() + 1 >= totalPages" (click)="goToPage(page() + 1)">→</button>
+    </nav>
+  }
+</section>

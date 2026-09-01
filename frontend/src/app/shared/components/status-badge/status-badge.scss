@@ -1,0 +1,44 @@
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &--to_apply {
+    background: #e5e7eb;
+    color: #374151;
+  }
+
+  &--applied {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  &--follow_up {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  &--hr_interview,
+  &--technical_interview {
+    background: #ede9fe;
+    color: #5b21b6;
+  }
+
+  &--offer {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &--rejected {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  &--withdrawn {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+}

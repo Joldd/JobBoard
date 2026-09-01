@@ -1,0 +1,56 @@
+<section class="application-form-page">
+  <h1>{{ isEditMode() ? 'Modifier la candidature' : 'Nouvelle candidature' }}</h1>
+
+  @if (loading()) {
+    <p>Chargement…</p>
+  } @else {
+  <form class="application-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <label for="company">Entreprise *</label>
+    <input id="company" type="text" formControlName="company" />
+
+    <label for="position">Poste *</label>
+    <input id="position" type="text" formControlName="position" />
+
+    <label for="jobType">Type de poste *</label>
+    <select id="jobType" formControlName="jobType">
+      <option value="" disabled>Choisir…</option>
+      @for (option of jobTypeOptions; track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+
+    <label for="applicationDate">Date de candidature *</label>
+    <input id="applicationDate" type="date" formControlName="applicationDate" />
+
+    @if (!isEditMode()) {
+      <label for="initialStatus">Statut initial</label>
+      <select id="initialStatus" formControlName="initialStatus">
+        <option value="">À postuler (par défaut)</option>
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    }
+
+    <label for="jobOfferUrl">Lien de l'offre</label>
+    <input id="jobOfferUrl" type="url" formControlName="jobOfferUrl" placeholder="https://…" />
+
+    <label for="estimatedSalary">Salaire estimé (€)</label>
+    <input id="estimatedSalary" type="number" min="0" formControlName="estimatedSalary" />
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" rows="4" formControlName="notes"></textarea>
+
+    <div class="application-form__actions">
+      <button type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Enregistrement…' : 'Enregistrer' }}
+      </button>
+      <a routerLink="/applications">Annuler</a>
+    </div>
+  </form>
+  }
+</section>

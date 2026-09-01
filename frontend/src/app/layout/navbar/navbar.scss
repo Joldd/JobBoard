@@ -6,9 +6,26 @@
   background: #1f2937;
   color: #fff;
 
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
   &__brand {
     font-weight: 600;
     letter-spacing: 0.02em;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover,
+    &.active {
+      color: #fff;
+    }
   }
 
   &__user {

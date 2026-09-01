@@ -1,0 +1,72 @@
+@if (loading()) {
+  <p class="loading">Chargement…</p>
+} @else if (application(); as app) {
+  <section class="detail">
+    <header class="detail__header">
+      <div>
+        <h1>{{ app.company }}</h1>
+        <p class="detail__position">{{ app.position }} · {{ app.jobType | jobTypeLabel }}</p>
+      </div>
+      <app-status-badge [status]="app.currentStatus" />
+    </header>
+
+    <dl class="detail__fields">
+      <dt>Date de candidature</dt>
+      <dd>{{ app.applicationDate }}</dd>
+
+      @if (app.jobOfferUrl) {
+        <dt>Offre</dt>
+        <dd><a [href]="app.jobOfferUrl" target="_blank" rel="noopener">{{ app.jobOfferUrl }}</a></dd>
+      }
+
+      @if (app.estimatedSalary) {
+        <dt>Salaire estimé</dt>
+        <dd>{{ app.estimatedSalary }} €</dd>
+      }
+
+      @if (app.notes) {
+        <dt>Notes</dt>
+        <dd>{{ app.notes }}</dd>
+      }
+    </dl>
+
+    <div class="detail__actions">
+      <a [routerLink]="['/applications', app.id, 'edit']">Modifier</a>
+      <button type="button" (click)="delete()">Supprimer</button>
+    </div>
+
+    <section class="status-change">
+      <h2>Changer de statut</h2>
+      <form [formGroup]="statusForm" (ngSubmit)="onChangeStatus()" novalidate>
+        @if (statusChangeError()) {
+          <p class="error">{{ statusChangeError() }}</p>
+        }
+        <select formControlName="status">
+          <option value="" disabled>Nouveau statut…</option>
+          @for (option of statusOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+        <input type="text" formControlName="comment" placeholder="Commentaire (optionnel)" />
+        <button type="submit" [disabled]="isChangingStatus()">Valider</button>
+      </form>
+    </section>
+
+    <section class="history">
+      <h2>Historique</h2>
+      <ul>
+        @for (entry of history(); track entry.id) {
+          <li>
+            <app-status-badge [status]="entry.status" />
+            <span class="history__date">{{ entry.changedAt }}</span>
+            @if (entry.comment) {
+              <span class="history__comment">{{ entry.comment }}</span>
+            }
+          </li>
+        }
+      </ul>
+    </section>
+  </section>
+} @else {
+  <p class="loading">Candidature introuvable.</p>
+}

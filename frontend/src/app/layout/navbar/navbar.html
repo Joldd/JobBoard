@@ -1,5 +1,9 @@
 <nav class="navbar">
-  <span class="navbar__brand">JobBoard</span>
+  <div class="navbar__left">
+    <span class="navbar__brand">JobBoard</span>
+    <a routerLink="/dashboard" routerLinkActive="active">Tableau de bord</a>
+    <a routerLink="/applications" routerLinkActive="active">Candidatures</a>
+  </div>
 
   @if (authService.currentUser(); as user) {
     <div class="navbar__user">
