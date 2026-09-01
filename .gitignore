@@ -38,7 +38,7 @@ yarn-error.log*
 .idea/
 *.iml
 *.iws
-.vscode/
+.vscode/*
 !.vscode/extensions.json
 .classpath
 .project
