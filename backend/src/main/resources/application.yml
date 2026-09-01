@@ -17,6 +17,17 @@ spring:
 server:
   port: 8080
 
+app:
+  cors:
+    # Liste séparée par des virgules ; Spring la convertit automatiquement en List<String>.
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}
+
+jwt:
+  # Secret de dev par défaut (clé HMAC-SHA256, 256 bits) : à écraser via JWT_SECRET
+  # en dehors du poste local (jamais ce défaut en prod).
+  secret: ${JWT_SECRET:TkVDXlAoUEJ42UVaRZwmc4g2NE7F31HYfEKDXJJcVNk=}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24h
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
