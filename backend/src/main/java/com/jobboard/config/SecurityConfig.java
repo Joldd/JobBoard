@@ -50,7 +50,13 @@ public class SecurityConfig {
         "/swagger-ui/**",
         "/swagger-ui.html",
         "/actuator/health",
-        "/actuator/info"
+        "/actuator/info",
+        // Spring Boot passe par un forward interne vers /error (sendError, 404 sans
+        // handler...) qui retraverse toute la chaîne de sécurité. En mode stateless,
+        // le contexte y est vidé et le filtre JWT ne se réexécute pas (OncePerRequestFilter),
+        // donc sans cette ligne CE second passage échoue toujours en 401 et masque le
+        // vrai code (400/404/500) que BasicErrorController essaie de renvoyer.
+        "/error"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
